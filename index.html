@@ -3,145 +3,295 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SCRENZO | Premium Engineered Device Armor</title>
+  <title>SCRENZO | Premium Engineered Device Shield</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
-      theme: { extend: { colors: { obsidian: '#0A0A0B', darkGrey: '#141416', electricCyan: '#00E5FF' } } }
+      theme: { 
+        extend: { 
+          colors: { 
+            obsidian: '#0D0D0E', 
+            luxuryGrey: '#161619', 
+            premiumGold: '#D4AF37',
+            goldHover: '#AA8C2C',
+            emeraldGreen: '#2ECC71'
+          } 
+        } 
+      }
     }
   </script>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-  <style>body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0A0A0B; color: #FFFFFF; }</style>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0D0D0E; color: #FFFFFF; }
+    /* Clean custom scrollbar for luxury UI */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0D0D0E; }
+    ::-webkit-scrollbar-thumb { background: #1A1A1C; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #D4AF37; }
+  </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between">
 
-  <header class="border-b border-white/10 bg-obsidian/90 sticky top-0 z-50 px-6 py-4">
-    <div class="max-w-7xl mx-auto flex justify-between items-center">
-      <div class="text-2xl font-extrabold tracking-wider">SCREN<span class="text-electricCyan">ZO</span></div>
-      <div class="text-xs text-gray-400 font-mono bg-white/5 px-3 py-1 rounded-full border border-white/10">PREVIEW MODE</div>
+  <!-- Header Section -->
+  <header class="border-b border-white/5 bg-obsidian/95 sticky top-0 z-50 px-4 md:px-8 py-4">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="text-2xl font-extrabold tracking-wider">SCREN<span class="text-premiumGold">ZO</span></div>
+      
+      <!-- Live Smart Search Input (Intent-Oriented) -->
+      <div class="relative w-full md:w-80">
+        <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-500 text-sm">🔍</span>
+        <input type="text" id="searchInput" placeholder="Search your model (e.g., S26 Ultra)..." 
+          class="w-full bg-luxuryGrey border border-white/10 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-premiumGold transition-colors">
+      </div>
     </div>
   </header>
 
-  <main class="flex-grow flex flex-col items-center justify-center px-4 py-16 text-center max-w-4xl mx-auto">
-    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-electricCyan/10 border border-electricCyan/20 text-xs font-semibold tracking-wider text-electricCyan mb-6 uppercase">
-      ⚡ Armor Engineered Lab
-    </div>
-    <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4">
-      Invisible Protection.<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-500">Uncompromising Clarity.</span>
-    </h1>
-    <p class="text-gray-400 max-w-lg mb-10 text-sm md:text-base">
-      High-grade defensive glass tailored to fit your device seamlessly. No bubbles, no edge peeling, pure optical defense.
-    </p>
+  <!-- Navigation Control Center -->
+  <section class="w-full bg-luxuryGrey/40 border-b border-white/5 py-6 px-4">
+    <div class="max-w-7xl mx-auto">
+      <p class="text-xs font-bold text-premiumGold uppercase tracking-widest mb-3 text-center md:text-left">Find Precise Fit Architecture</p>
+      
+      <!-- 3-Tier Sequential Search Matrix Bar -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <!-- Tier 1: Category Filter -->
+        <div class="relative">
+          <select id="categoryDrop" class="w-full bg-luxuryGrey border border-white/10 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-premiumGold appearance-none cursor-pointer">
+            <option value="all">All Categories</option>
+            <option value="Screen Protector" selected>Tempered Glass Screen Protectors</option>
+            <option value="Camera Protector">Camera Lens Protectors</option>
+          </select>
+        </div>
 
-    <div class="w-full max-w-md bg-darkGrey border border-white/10 rounded-2xl p-6 text-left shadow-2xl">
-      <h3 class="text-md font-bold text-white mb-4 uppercase tracking-wider text-gray-300">Select Your Model</h3>
-      <div class="space-y-4">
-        <div>
-          <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1.5">1. Phone Brand</label>
-          <select id="brandDrop" class="w-full bg-obsidian border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-electricCyan appearance-none cursor-pointer">
-            <option value="">Select Manufacturer...</option>
-            <option value="Apple">Apple</option>
-            <option value="Samsung">Samsung</option>
+        <!-- Tier 2: Brand Filter -->
+        <div class="relative">
+          <select id="brandDrop" class="w-full bg-luxuryGrey border border-white/10 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-premiumGold appearance-none cursor-pointer">
+            <option value="">Select Brand...</option>
           </select>
         </div>
-        <div>
-          <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1.5">2. Specific Model</label>
-          <select id="modelDrop" disabled class="w-full bg-obsidian border border-white/10 rounded-xl px-4 py-3 text-gray-500 focus:outline-none focus:border-electricCyan appearance-none cursor-not-allowed">
-            <option value="">Select a brand first...</option>
+
+        <!-- Tier 3: Model Filter -->
+        <div class="relative">
+          <select id="modelDrop" disabled class="w-full bg-luxuryGrey border border-white/10 rounded-xl px-4 py-3 text-xs text-gray-500 focus:outline-none focus:border-premiumGold appearance-none cursor-not-allowed">
+            <option value="">Choose a model...</option>
           </select>
         </div>
-        <button id="findArmorBtn" disabled class="w-full bg-white/5 text-gray-500 font-bold py-3.5 rounded-xl transition-all duration-300 uppercase tracking-wider text-xs mt-2">
-          Unlock Tailored Armor
-        </button>
       </div>
+    </div>
+  </section>
+
+  <!-- Main Showcase Feed -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 md:px-8 py-12">
+    
+    <!-- Dynamic Header State Message -->
+    <div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5 pb-4">
+      <div>
+        <h1 id="feedTitle" class="text-xl font-bold text-white tracking-wide">Premium Product Collection</h1>
+        <p id="feedSubtitle" class="text-xs text-gray-400 mt-1">Showing all luxury protection options available for instant fulfillment.</p>
+      </div>
+      <div id="resultsBadge" class="text-xs font-mono bg-premiumGold/10 text-premiumGold px-3 py-1.5 rounded-full border border-premiumGold/20 font-semibold self-start md:self-auto">
+        0 Options Discovered
+      </div>
+    </div>
+
+    <!-- Product Grid Canvas -->
+    <div id="cardsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Database card items render here dynamically -->
+    </div>
+
+    <!-- Empty Results State Overlay -->
+    <div id="emptyState" class="hidden text-center py-20">
+      <span class="text-4xl">🛡️</span>
+      <h3 class="text-md font-bold text-white mt-4">No Matching Configurations Found</h3>
+      <p class="text-xs text-gray-500 mt-1 max-w-xs mx-auto">Try altering your structural filters or check your spelling context in the search input above.</p>
     </div>
   </main>
 
-  <footer class="border-t border-white/5 bg-obsidian py-6 text-center text-xs text-gray-600">
-    &copy; 2026 SCRENZO Premium Lab. High impact architecture protection.
+  <!-- Luxury Footer -->
+  <footer class="border-t border-white/5 bg-obsidian py-6 text-center text-xs text-gray-600 tracking-wider uppercase">
+    &copy; 2026 SCRENZO Premium Shield. Uncompromising Structural Integrity.
   </footer>
 
+  <!-- Live Database Real-Time Engine -->
   <script>
-  const SUPABASE_URL = "https://arpwqiiwrcumelqxvgdu.supabase.co";
+    const SUPABASE_URL = "https://arpwqiiwrcumelqxvgdu.supabase.co";
     const SUPABASE_KEY = "sb_publishable_TSaS0yglUFyygvrnh7plow_qQuUkJRz";
 
+    const categoryDrop = document.getElementById('categoryDrop');
     const brandDrop = document.getElementById('brandDrop');
     const modelDrop = document.getElementById('modelDrop');
-    const findArmorBtn = document.getElementById('findArmorBtn');
+    const searchInput = document.getElementById('searchInput');
+    const cardsGrid = document.getElementById('cardsGrid');
+    const resultsBadge = document.getElementById('resultsBadge');
+    const feedTitle = document.getElementById('feedTitle');
+    const feedSubtitle = document.getElementById('feedSubtitle');
+    const emptyState = document.getElementById('emptyState');
 
-    // Automatically fetch unique brands from your live database tables on startup
-    async function loadBrands() {
+    let localProductsCache = [];
+
+    // 1. Initialize Engine & Fetch Complete Catalog from Supabase
+    async function initCatalog() {
       try {
-        const response = await fetch(`${SUPABASE_URL}/rest/v1/products?select=device_brand`, {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/products?select=*`, {
           headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` }
         });
-        const data = await response.json();
+        localProductsCache = await response.json();
         
-        // Filter down to unique brand names
-        const uniqueBrands = [...new Set(data.map(item => item.device_brand))];
-        
-        brandDrop.innerHTML = '<option value="">Select Manufacturer...</option>';
-        uniqueBrands.forEach(brand => {
-          brandDrop.innerHTML += `<option value="${brand}">${brand}</option>`;
-        });
+        populateBrandDropdown();
+        applyFilterMatrix();
       } catch (err) {
-        console.error("Database connection error: ", err);
+        console.error("Critical Catalog Injection Failure:", err);
       }
     }
 
-    // Fetch unique models specifically for the selected brand
-    brandDrop.addEventListener('change', async (e) => {
-      const selectedBrand = e.target.value;
+    // Populate Brands Based on Data
+    function populateBrandDropdown() {
+      const uniqueBrands = [...new Set(localProductsCache.map(p => p.device_brand))].filter(Boolean);
+      brandDrop.innerHTML = '<option value="">All Brands</option>';
+      uniqueBrands.forEach(brand => {
+        brandDrop.innerHTML += `<option value="${brand}">${brand}</option>`;
+      });
+    }
+
+    // Populate Models Based on Chosen Brand
+    function updateModelDropdown(selectedBrand) {
       if (!selectedBrand) {
-        resetSelectors();
+        modelDrop.disabled = true;
+        modelDrop.className = "w-full bg-luxuryGrey border border-white/10 rounded-xl px-4 py-3 text-xs text-gray-500 cursor-not-allowed appearance-none";
+        modelDrop.innerHTML = '<option value="">Choose a model...</option>';
         return;
       }
 
-      modelDrop.disabled = true;
-      modelDrop.innerHTML = '<option value="">Loading live models...</option>';
+      const matchingModels = [...new Set(localProductsCache
+        .filter(p => p.device_brand === selectedBrand)
+        .map(p => p.device_model))].filter(Boolean);
 
-      try {
-        const response = await fetch(`${SUPABASE_URL}/rest/v1/products?device_brand=eq.${selectedBrand}&select=device_model`, {
-          headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` }
-        });
-        const data = await response.json();
-        const uniqueModels = [...new Set(data.map(item => item.device_model))];
-
-        modelDrop.disabled = false;
-        modelDrop.className = "w-full bg-obsidian border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-electricCyan appearance-none cursor-pointer";
-        modelDrop.innerHTML = '<option value="">Choose your phone model...</option>';
-        uniqueModels.forEach(model => {
-          modelDrop.innerHTML += `<option value="${model}">${model}</option>`;
-        });
-      } catch (err) {
-        console.error("Error fetching models: ", err);
-      }
-    });
-
-    modelDrop.addEventListener('change', (e) => {
-      if (e.target.value) {
-        findArmorBtn.disabled = false;
-        findArmorBtn.className = "w-full bg-electricCyan text-obsidian font-bold py-3.5 rounded-xl transition-all duration-300 uppercase tracking-wider text-xs mt-2 cursor-pointer font-bold shadow-[0_0_20px_rgba(0,229,255,0.25)] hover:scale-[1.01]";
-      } else {
-        findArmorBtn.disabled = true;
-        findArmorBtn.className = "w-full bg-white/5 text-gray-500 font-bold py-3.5 rounded-xl transition-all duration-300 uppercase tracking-wider text-xs mt-2 cursor-not-allowed";
-      }
-    });
-
-    function resetSelectors() {
-      modelDrop.disabled = true;
-      modelDrop.className = "w-full bg-obsidian border border-white/10 rounded-xl px-4 py-3 text-gray-500 focus:outline-none focus:border-electricCyan appearance-none cursor-not-allowed";
-      modelDrop.innerHTML = '<option value="">Select a brand first...</option>';
-      findArmorBtn.disabled = true;
-      findArmorBtn.className = "w-full bg-white/5 text-gray-500 font-bold py-3.5 rounded-xl transition-all duration-300 uppercase tracking-wider text-xs mt-2 cursor-not-allowed";
+      modelDrop.disabled = false;
+      modelDrop.className = "w-full bg-luxuryGrey border border-white/10 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-premiumGold appearance-none cursor-pointer";
+      modelDrop.innerHTML = '<option value="">All Models for ' + selectedBrand + '</option>';
+      
+      matchingModels.forEach(model => {
+        modelDrop.innerHTML += `<option value="${model}">${model}</option>`;
+      });
     }
 
-    findArmorBtn.addEventListener('click', () => {
-      alert(`Fetching matching SCRENZO armor options for ${modelDrop.value} live from database table!`);
-    });
+    // 2. High-Converting Multi-Tier Filtration Core Algorithm
+    function applyFilterMatrix() {
+      const targetCategory = categoryDrop.value;
+      const targetBrand = brandDrop.value;
+      const targetModel = modelDrop.value;
+      const searchString = searchInput.value.toLowerCase().trim();
 
-    // Run live pull immediately on page execution
-    loadBrands();
+      // Dynamic Title Copy Assignment
+      if (targetBrand && targetModel) {
+        feedTitle.innerText = `${targetBrand} ${targetModel} Protection`;
+        feedSubtitle.innerText = `Displaying custom-engineered shield architectural variants built specifically for your device.`;
+      } else if (targetBrand) {
+        feedTitle.innerText = `${targetBrand} Premium Collection`;
+        feedSubtitle.innerText = `Browse our maximum-grade protective configurations available for ${targetBrand} smartphones.`;
+      } else {
+        feedTitle.innerText = `Premium Product Collection`;
+        feedSubtitle.innerText = `Showing all luxury protection options available for instant fulfillment.`;
+      }
+
+      // Filter Logic Execution
+      const filteredList = localProductsCache.filter(item => {
+        const matchesCategory = (targetCategory === 'all' || (item.category && item.category.toLowerCase() === targetCategory.toLowerCase()));
+        const matchesBrand = (!targetBrand || item.device_brand === targetBrand);
+        const matchesModel = (!targetModel || item.device_model === targetModel);
+        
+        const matchesSearch = (!searchString || 
+          (item.title && item.title.toLowerCase().includes(searchString)) ||
+          (item.device_brand && item.device_brand.toLowerCase().includes(searchString)) ||
+          (item.device_model && item.device_model.toLowerCase().includes(searchString))
+        );
+
+        return matchesCategory && matchesBrand && matchesModel && matchesSearch;
+      });
+
+      renderGridFeed(filteredList);
+    }
+
+    // 3. Render HTML Product Cards with Advanced Pricing Psychology
+    function renderGridFeed(products) {
+      cardsGrid.innerHTML = '';
+      resultsBadge.innerText = `${products.length} Option${products.length === 1 ? '' : 's'} Discovered`;
+
+      if (products.length === 0) {
+        emptyState.classList.remove('hidden');
+        return;
+      }
+      emptyState.classList.add('hidden');
+
+      products.forEach(item => {
+        // Fallback pricing configuration logic if values are absent from mock columns
+        const salePrice = item.price || 999;
+        const mrpPrice = item.mrp || Math.round(salePrice * 1.6);
+        const cashSavings = mrpPrice - salePrice;
+
+        const productCard = `
+          <div class="bg-luxuryGrey border border-white/5 rounded-2xl p-5 flex flex-col justify-between transition-all duration-300 hover:border-premiumGold/30 group shadow-[0_20px_40px_-15px_rgba(0,0,0,0.7)]">
+            <div>
+              <!-- Visual Accent Header Ribbon -->
+              <div class="flex justify-between items-start gap-2 mb-4">
+                <span class="text-[10px] font-mono tracking-widest bg-premiumGold/10 text-premiumGold px-2.5 py-1 rounded-md border border-premiumGold/20 font-bold uppercase">
+                  ${item.device_brand || 'Premium'} Shield
+                </span>
+                <span class="text-[10px] font-mono text-emeraldGreen bg-emeraldGreen/10 border border-emeraldGreen/20 px-2 py-0.5 rounded font-bold uppercase">
+                  Save ₹${cashSavings}
+                </span>
+              </div>
+
+              <!-- Titles -->
+              <h3 class="text-md font-bold text-white tracking-tight group-hover:text-premiumGold transition-colors">
+                ${item.title || (item.device_brand + ' ' + item.device_model + ' Tempered Glass')}
+              </h3>
+              <p class="text-xs text-gray-400 font-medium mt-1">Designed for ${item.device_model || 'Universal device models'}</p>
+              
+              <!-- Features Points Checklist -->
+              <ul class="mt-4 space-y-1.5 text-[11px] text-gray-500 border-t border-white/5 pt-3">
+                <li class="flex items-center gap-1.5">⚡ <span class="text-gray-400">9H Structural Shield Hardness</span></li>
+                <li class="flex items-center gap-1.5">💎 <span class="text-gray-400">Pure HD Optical Transmission</span></li>
+                <li class="flex items-center gap-1.5">📦 <span class="text-gray-400">Includes Alignment Applicator Box</span></li>
+              </ul>
+            </div>
+
+            <!-- Pricing Engine & Buy Matrix -->
+            <div class="mt-6 pt-3 border-t border-white/5">
+              <div class="flex items-baseline gap-2 mb-3">
+                <span class="text-xl font-extrabold text-white">₹${salePrice}</span>
+                <span class="text-xs text-gray-500 line-through">MRP ₹${mrpPrice}</span>
+              </div>
+              
+              <button onclick="executeSecurePurchase('${item.id}', '${item.device_model}')" 
+                class="w-full bg-premiumGold text-obsidian font-bold py-3 rounded-xl text-xs uppercase tracking-widest font-bold transition-all duration-300 hover:bg-goldHover hover:scale-[1.01] active:scale-[0.99] shadow-[0_4px_20px_rgba(212,175,55,0.15)]">
+                Secure Purchase
+              </button>
+              <div class="text-[10px] text-gray-600 text-center mt-2 tracking-wide">
+                🚚 FREE INSURED EXPRESS SHIPPING & COD NATIONWIDE
+              </div>
+            </div>
+          </div>
+        `;
+        cardsGrid.innerHTML += productCard;
+      });
+    }
+
+    // Action Execution Trigger Mock
+    function executeSecurePurchase(productId, modelName) {
+      alert(`Initializing Razorpay secure gateway checkout sequence for ${modelName} protection asset!`);
+    }
+
+    // 4. Input Wire Event Observers
+    brandDrop.addEventListener('change', (e) => {
+      updateModelDropdown(e.target.value);
+      applyFilterMatrix();
+    });
+    modelDrop.addEventListener('change', applyFilterMatrix);
+    categoryDrop.addEventListener('change', applyFilterMatrix);
+    searchInput.addEventListener('input', applyFilterMatrix);
+
+    // Bootstrap execution script
+    initCatalog();
   </script>
 </body>
-</html>  
+</html>
