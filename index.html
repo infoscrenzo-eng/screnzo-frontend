@@ -62,33 +62,64 @@
   </footer>
 
   <script>
+  const SUPABASE_URL = "https://arpwqiiwrcumelqxvgdu.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_TSaS0yglUFyygvrnh7plow_qQuUkJRz";
+
     const brandDrop = document.getElementById('brandDrop');
     const modelDrop = document.getElementById('modelDrop');
     const findArmorBtn = document.getElementById('findArmorBtn');
 
-    const devices = {
-      Apple: ['iPhone 17 Pro', 'iPhone 17 Pro Max'],
-      Samsung: ['Galaxy S26 Ultra']
-    };
+    // Automatically fetch unique brands from your live database tables on startup
+    async function loadBrands() {
+      try {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/products?select=device_brand`, {
+          headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` }
+        });
+        const data = await response.json();
+        
+        // Filter down to unique brand names
+        const uniqueBrands = [...new Set(data.map(item => item.device_brand))];
+        
+        brandDrop.innerHTML = '<option value="">Select Manufacturer...</option>';
+        uniqueBrands.forEach(brand => {
+          brandDrop.innerHTML += `<option value="${brand}">${brand}</option>`;
+        });
+      } catch (err) {
+        console.error("Database connection error: ", err);
+      }
+    }
 
-    brandDrop.addEventListener('change', (e) => {
-      const b = e.target.value;
-      if(b) {
+    // Fetch unique models specifically for the selected brand
+    brandDrop.addEventListener('change', async (e) => {
+      const selectedBrand = e.target.value;
+      if (!selectedBrand) {
+        resetSelectors();
+        return;
+      }
+
+      modelDrop.disabled = true;
+      modelDrop.innerHTML = '<option value="">Loading live models...</option>';
+
+      try {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/products?device_brand=eq.${selectedBrand}&select=device_model`, {
+          headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` }
+        });
+        const data = await response.json();
+        const uniqueModels = [...new Set(data.map(item => item.device_model))];
+
         modelDrop.disabled = false;
         modelDrop.className = "w-full bg-obsidian border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-electricCyan appearance-none cursor-pointer";
         modelDrop.innerHTML = '<option value="">Choose your phone model...</option>';
-        devices[b].forEach(m => modelDrop.innerHTML += `<option value="${m}">${m}</option>`);
-      } else {
-        modelDrop.disabled = true;
-        modelDrop.className = "w-full bg-obsidian border border-white/10 rounded-xl px-4 py-3 text-gray-500 focus:outline-none focus:border-electricCyan appearance-none cursor-not-allowed";
-        modelDrop.innerHTML = '<option value="">Select a brand first...</option>';
-        findArmorBtn.disabled = true;
-        findArmorBtn.className = "w-full bg-white/5 text-gray-500 font-bold py-3.5 rounded-xl transition-all duration-300 uppercase tracking-wider text-xs mt-2 cursor-not-allowed";
+        uniqueModels.forEach(model => {
+          modelDrop.innerHTML += `<option value="${model}">${model}</option>`;
+        });
+      } catch (err) {
+        console.error("Error fetching models: ", err);
       }
     });
 
     modelDrop.addEventListener('change', (e) => {
-      if(e.target.value) {
+      if (e.target.value) {
         findArmorBtn.disabled = false;
         findArmorBtn.className = "w-full bg-electricCyan text-obsidian font-bold py-3.5 rounded-xl transition-all duration-300 uppercase tracking-wider text-xs mt-2 cursor-pointer font-bold shadow-[0_0_20px_rgba(0,229,255,0.25)] hover:scale-[1.01]";
       } else {
@@ -97,9 +128,20 @@
       }
     });
 
+    function resetSelectors() {
+      modelDrop.disabled = true;
+      modelDrop.className = "w-full bg-obsidian border border-white/10 rounded-xl px-4 py-3 text-gray-500 focus:outline-none focus:border-electricCyan appearance-none cursor-not-allowed";
+      modelDrop.innerHTML = '<option value="">Select a brand first...</option>';
+      findArmorBtn.disabled = true;
+      findArmorBtn.className = "w-full bg-white/5 text-gray-500 font-bold py-3.5 rounded-xl transition-all duration-300 uppercase tracking-wider text-xs mt-2 cursor-not-allowed";
+    }
+
     findArmorBtn.addEventListener('click', () => {
-      alert(`Connecting client interface to database server for the ${modelDrop.value}...`);
+      alert(`Fetching matching SCRENZO armor options for ${modelDrop.value} live from database table!`);
     });
+
+    // Run live pull immediately on page execution
+    loadBrands();
   </script>
 </body>
 </html> 
