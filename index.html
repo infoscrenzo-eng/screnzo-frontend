@@ -7,7 +7,6 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
-      darkMode: 'class',
       theme: { 
         extend: { 
           colors: { 
@@ -15,7 +14,9 @@
             luxuryGrey: '#161619', 
             premiumGold: '#D4AF37',
             goldHover: '#AA8C2C',
-            emeraldGreen: '#2ECC71'
+            emeraldGreen: '#2ECC71',
+            titaniumBg: '#1A1C23',
+            titaniumCard: '#242731'
           } 
         } 
       }
@@ -23,14 +24,15 @@
   </script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Plus Jakarta Sans', sans-serif; transition: background-color 0.3s ease, color 0.3s ease; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; transition: background-color 0.4s ease, color 0.4s ease; }
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: #0D0D0E; }
     ::-webkit-scrollbar-thumb { background: #1A1A1C; border-radius: 10px; }
     ::-webkit-scrollbar-thumb:hover { background: #D4AF37; }
+    .theme-panel { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
   </style>
 </head>
-<body class="bg-obsidian text-white dark:bg-obsidian dark:text-white min-h-screen flex flex-col justify-between overflow-x-hidden">
+<body id="appBody" class="bg-obsidian text-white min-h-screen flex flex-col justify-between overflow-x-hidden">
 
   <!-- TOP ANNOUNCEMENT BAR (Psychological Urgency Trigger) -->
   <div class="bg-gradient-to-r from-goldHover via-premiumGold to-goldHover text-obsidian text-center py-2 px-4 text-[11px] font-extrabold tracking-widest uppercase">
@@ -38,30 +40,30 @@
   </div>
 
   <!-- MAIN NAVIGATION ENTERPRISE HEADER -->
-  <header class="border-b border-white/10 bg-obsidian/95 dark:bg-obsidian/95 dark:border-white/5 light-theme:bg-white light-theme:border-gray-200 sticky top-0 z-50 px-4 md:px-8 py-4 backdrop-blur-md transition-colors duration-300" id="mainHeader">
+  <header class="border-b border-white/5 bg-obsidian/95 sticky top-0 z-50 px-4 md:px-8 py-4 backdrop-blur-md transition-colors duration-300" id="mainHeader">
     <div class="max-w-7xl mx-auto flex justify-between items-center gap-4">
       
       <!-- Brand Identity -->
-      <a href="#" class="text-2xl font-extrabold tracking-wider" id="brandLogo">SCREN<span class="text-premiumGold">ZO</span></a>
+      <a href="#" class="text-2xl font-extrabold tracking-wider text-white">SCREN<span class="text-premiumGold">ZO</span></a>
       
       <!-- Middle Nav Menu -->
-      <nav class="hidden md:flex items-center gap-8 text-xs font-semibold tracking-widest uppercase text-gray-400" id="navLinks">
-        <a href="#" class="text-white dark:text-white hover:text-premiumGold transition-colors">Shop Protection</a>
+      <nav class="hidden md:flex items-center gap-8 text-xs font-semibold tracking-widest uppercase text-gray-400">
+        <a href="#" class="text-white hover:text-premiumGold transition-colors">Shop Protection</a>
         <a href="#" class="hover:text-premiumGold transition-colors">Our Story</a>
         <a href="#" class="hover:text-premiumGold transition-colors">Support Desk</a>
       </nav>
       
-      <!-- Right Action Interface Hub (Dark/Light Toggle + Cart) -->
+      <!-- Right Action Interface Hub (Aesthetic Shifter + Cart) -->
       <div class="flex items-center gap-4">
         
-        <!-- DYNAMIC LIGHT / DARK MODE TOGGLE BUTTON -->
-        <button onclick="toggleThemeMode()" id="themeToggleBtn" class="bg-white/5 border border-white/10 dark:bg-white/5 dark:border-white/10 text-gray-300 hover:text-premiumGold px-3 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5">
-          ☀️ <span id="themeToggleText">Light Mode</span>
+        <!-- LUXURY DYNAMIC STYLE SHIFTER -->
+        <button onclick="toggleVisualAesthetic()" id="styleToggleBtn" class="bg-white/5 border border-white/10 text-gray-300 hover:text-premiumGold px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2 shadow-lg">
+          ⚙️ <span id="styleToggleText">Tactical Titanium</span>
         </button>
 
-        <button onclick="toggleCartDrawer(true)" class="relative bg-premiumGold/10 border border-premiumGold/20 text-premiumGold px-4 py-2 rounded-xl flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:bg-premiumGold hover:text-obsidian transition-all">
+        <button onclick="alert('Cart module synced successfully')" class="relative bg-premiumGold/10 border border-premiumGold/20 text-premiumGold px-4 py-2 rounded-xl flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:bg-premiumGold hover:text-obsidian transition-all">
           <span>🛒 Cart</span>
-          <span id="cartBadgeCount" class="bg-premiumGold text-obsidian px-1.5 py-0.2 rounded-md font-mono font-extrabold text-[10px]">0</span>
+          <span class="bg-premiumGold text-obsidian px-1.5 py-0.2 rounded-md font-mono font-extrabold text-[10px]">0</span>
         </button>
       </div>
     </div>
@@ -71,31 +73,31 @@
   <main class="max-w-7xl w-full mx-auto px-4 md:px-8 py-12 flex-grow space-y-12">
     
     <!-- HERO HERO COMPOSITE BANNER -->
-    <section id="heroPanel" class="rounded-3xl p-8 md:p-16 relative overflow-hidden bg-luxuryGrey border border-white/5 dark:bg-luxuryGrey dark:border-white/5 min-h-[320px] flex flex-col justify-center transition-colors duration-300">
+    <section id="heroPanel" class="theme-panel rounded-3xl p-8 md:p-16 relative overflow-hidden bg-luxuryGrey border border-white/5 min-h-[320px] flex flex-col justify-center shadow-[0_25px_50px_-12px_rgba(0,0,0,0.6)]">
       <div class="max-w-xl space-y-3 relative z-10">
-        <span id="heroRibbon" class="text-[10px] font-mono font-bold uppercase tracking-widest text-premiumGold bg-white/5 px-3 py-1 rounded-full border border-white/5">Maximum Security Architecture</span>
-        <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight text-white dark:text-white leading-tight" id="heroTitle">The Ultimate Shield For Your Screen.</h1>
-        <p class="text-xs md:text-sm text-gray-400 dark:text-gray-400" id="heroDesc">Engineered with high-grade multi-layer compound reinforcing treatment vectors to preserve pure retina clarity and touch precision under extreme impact interfaces.</p>
+        <span class="text-[10px] font-mono font-bold uppercase tracking-widest text-premiumGold bg-white/5 px-3 py-1 rounded-full border border-white/5">Maximum Security Architecture</span>
+        <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight text-white leading-tight">The Ultimate Shield For Your Screen.</h1>
+        <p class="text-xs md:text-sm text-gray-400">Engineered with high-grade multi-layer compound reinforcing treatment vectors to preserve pure retina clarity and touch precision under extreme impact interfaces.</p>
       </div>
     </section>
 
     <!-- PRODUCT DISPLAY DIVISION MATRIX -->
     <section class="space-y-6">
-      <div class="border-b border-white/10 dark:border-white/5 pb-4">
-        <h2 class="text-xl font-bold text-white dark:text-white" id="gridTitle">Premium Protective Inventory</h2>
-        <p class="text-xs text-gray-400" id="gridDesc">Switch display modes above to preview how our luxury products render in both aesthetics.</p>
+      <div class="border-b border-white/5 pb-4">
+        <h2 class="text-xl font-bold text-white tracking-wide">Premium Protective Inventory</h2>
+        <p class="text-xs text-gray-400">Toggle active modes above to swap from Stealth Obsidian to Tactical Titanium layout aesthetics.</p>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         
         <!-- PRODUCT CARD 1 -->
-        <div class="product-card bg-luxuryGrey border border-white/5 dark:bg-luxuryGrey dark:border-white/5 rounded-2xl p-5 flex flex-col justify-between transition-all duration-300 shadow-xl group">
+        <div class="product-card theme-panel bg-luxuryGrey border border-white/5 rounded-2xl p-5 flex flex-col justify-between transition-all duration-300 shadow-xl group">
           <div>
             <div class="flex justify-between items-start mb-4">
               <span class="text-[9px] font-mono font-bold tracking-wider bg-white/5 text-gray-300 px-2.5 py-1 rounded uppercase border border-white/5">Apple iPhone Fit</span>
               <span class="text-[10px] font-mono text-emeraldGreen bg-emeraldGreen/10 border border-emeraldGreen/20 px-2 py-0.5 rounded font-bold uppercase">Save ₹299</span>
             </div>
-            <h3 class="card-text-title text-md font-bold text-white dark:text-white tracking-tight">SCRENZO™ Ultra-Clear HD Glass (2-Pack)</h3>
+            <h3 class="text-md font-bold text-white tracking-tight group-hover:text-premiumGold transition-colors">SCRENZO™ Ultra-Clear HD Glass (2-Pack)</h3>
             <p class="text-[11px] text-gray-500 mt-0.5">Device Module Variant: iPhone 17 Pro</p>
             <ul class="mt-4 space-y-1 text-[11px] text-gray-500 border-t border-white/5 pt-3">
               <li>⚡ <span class="text-gray-400">9H Toughened Pure Diamond Hardness</span></li>
@@ -104,7 +106,7 @@
           </div>
           <div class="mt-6 pt-3 border-t border-white/5">
             <div class="flex items-baseline gap-2 mb-3">
-              <span class="text-xl font-extrabold text-white dark:text-white">₹499</span>
+              <span class="text-xl font-extrabold text-white">₹499</span>
               <span class="text-xs text-gray-500 line-through">MRP ₹798</span>
             </div>
             <button class="w-full bg-premiumGold text-obsidian font-extrabold py-3 rounded-xl text-xs uppercase tracking-widest transition-all hover:bg-goldHover">Add To Cart</button>
@@ -112,13 +114,13 @@
         </div>
 
         <!-- PRODUCT CARD 2 -->
-        <div class="product-card bg-luxuryGrey border border-white/5 dark:bg-luxuryGrey dark:border-white/5 rounded-2xl p-5 flex flex-col justify-between transition-all duration-300 shadow-xl group">
+        <div class="product-card theme-panel bg-luxuryGrey border border-white/5 rounded-2xl p-5 flex flex-col justify-between transition-all duration-300 shadow-xl group">
           <div>
             <div class="flex justify-between items-start mb-4">
               <span class="text-[9px] font-mono font-bold tracking-wider bg-white/5 text-gray-300 px-2.5 py-1 rounded uppercase border border-white/5">Samsung Galaxy Fit</span>
               <span class="text-[10px] font-mono text-emeraldGreen bg-emeraldGreen/10 border border-emeraldGreen/20 px-2 py-0.5 rounded font-bold uppercase">Save ₹329</span>
             </div>
-            <h3 class="card-text-title text-md font-bold text-white dark:text-white tracking-tight">SCRENZO™ Premium Tempered Screen Guard</h3>
+            <h3 class="text-md font-bold text-white tracking-tight group-hover:text-premiumGold transition-colors">SCRENZO™ Premium Tempered Screen Guard</h3>
             <p class="text-[11px] text-gray-500 mt-0.5">Device Module Variant: Galaxy S26 Ultra</p>
             <ul class="mt-4 space-y-1 text-[11px] text-gray-500 border-t border-white/5 pt-3">
               <li>⚡ <span class="text-gray-400">9H Toughened Pure Diamond Hardness</span></li>
@@ -127,7 +129,7 @@
           </div>
           <div class="mt-6 pt-3 border-t border-white/5">
             <div class="flex items-baseline gap-2 mb-3">
-              <span class="text-xl font-extrabold text-white dark:text-white">₹549</span>
+              <span class="text-xl font-extrabold text-white">₹549</span>
               <span class="text-xs text-gray-500 line-through">MRP ₹878</span>
             </div>
             <button class="w-full bg-premiumGold text-obsidian font-extrabold py-3 rounded-xl text-xs uppercase tracking-widest transition-all hover:bg-goldHover">Add To Cart</button>
@@ -139,63 +141,47 @@
   </main>
 
   <!-- EDITORIAL BRAND FOOTER -->
-  <footer class="border-t border-white/10 bg-obsidian py-8 px-6 text-center text-xs text-gray-600 tracking-wider uppercase transition-colors duration-300" id="mainFooter">
-    &copy; 2026 SCRENZO™ International. Dark/Light Adaptability Active.
+  <footer class="border-t border-white/5 bg-obsidian py-8 px-6 text-center text-xs text-gray-600 tracking-wider uppercase transition-colors duration-300" id="mainFooter">
+    &copy; 2026 SCRENZO™ International. Luxury Visual Pipeline Active.
   </footer>
 
-  <!-- LIGHT/DARK THEME TRANSITION ENGINE SCRIPT -->
+  <!-- DUAL LUXURY MODE SWITCHER SCRIPT -->
   <script>
-    let isCurrentThemeDark = true;
+    let isCurrentlyObsidianMode = true;
 
-    function toggleThemeMode() {
-      const body = document.body;
+    function toggleVisualAesthetic() {
+      const body = document.getElementById('appBody');
       const header = document.getElementById('mainHeader');
       const footer = document.getElementById('mainFooter');
-      const logo = document.getElementById('brandLogo');
-      const hero = document.getElementById('heroPanel');
-      const heroTitle = document.getElementById('heroTitle');
-      const heroDesc = document.getElementById('heroDesc');
-      const gridTitle = document.getElementById('gridTitle');
-      const productCards = document.querySelectorAll('.product-card');
-      const cardTitles = document.querySelectorAll('.card-text-title');
-      
-      const toggleBtn = document.getElementById('themeToggleBtn');
-      const toggleText = document.getElementById('themeToggleText');
+      const toggleBtnText = document.getElementById('styleToggleText');
+      const panels = document.querySelectorAll('.theme-panel');
 
-      if (isCurrentThemeDark) {
-        // TRANSITION ENTIRE STOREFRONT TO LIGHT THEME
-        body.className = "bg-gray-50 text-gray-900 min-h-screen flex flex-col justify-between overflow-x-hidden";
-        header.className = "border-b border-gray-200 bg-white sticky top-0 z-50 px-4 md:px-8 py-4 backdrop-blur-md transition-colors duration-300";
-        footer.className = "border-t border-gray-200 bg-white py-8 px-6 text-center text-xs text-gray-400 tracking-wider uppercase transition-colors duration-300";
-        logo.className = "text-2xl font-extrabold tracking-wider text-gray-900";
+      if (isCurrentlyObsidianMode) {
+        // SWAP TO TACTICAL TITANIUM (Sleek gunmetal dark contrast)
+        body.style.backgroundColor = '#1A1C23';
+        header.style.backgroundColor = '#1A1C23';
+        footer.style.backgroundColor = '#1A1C23';
         
-        hero.className = "rounded-3xl p-8 md:p-16 relative overflow-hidden bg-gray-900 border border-gray-200 min-h-[320px] flex flex-col justify-center transition-colors duration-300";
-        gridTitle.className = "text-xl font-bold text-gray-900";
-        
-        productCards.forEach(card => {
-          card.className = "product-card bg-white border border-gray-200 rounded-2xl p-5 flex flex-col justify-between transition-all duration-300 shadow-md group";
+        panels.forEach(p => {
+          p.style.backgroundColor = '#242731';
+          p.style.borderColor = 'rgba(255,255,255,0.08)';
         });
-        cardTitles.forEach(title => title.className = "card-text-title text-md font-bold text-gray-900 tracking-tight");
 
-        toggleBtn.innerHTML = "🌙 <span>Dark Mode</span>";
-        isCurrentThemeDark = false;
+        toggleBtnText.innerText = "Stealth Obsidian";
+        isCurrentlyObsidianMode = false;
       } else {
-        // REVERT ENTIRE STOREFRONT TO LUXURY DARK THEME
-        body.className = "bg-obsidian text-white min-h-screen flex flex-col justify-between overflow-x-hidden";
-        header.className = "border-b border-white/10 bg-obsidian/95 sticky top-0 z-50 px-4 md:px-8 py-4 backdrop-blur-md transition-colors duration-300";
-        footer.className = "border-t border-white/10 bg-obsidian py-8 px-6 text-center text-xs text-gray-600 tracking-wider uppercase transition-colors duration-300";
-        logo.className = "text-2xl font-extrabold tracking-wider text-white";
+        // REVERT BACK TO STEALTH OBSIDIAN (Ultra deep luxury black)
+        body.style.backgroundColor = '#0D0D0E';
+        header.style.backgroundColor = '#0D0D0E';
+        footer.style.backgroundColor = '#0D0D0E';
         
-        hero.className = "rounded-3xl p-8 md:p-16 relative overflow-hidden bg-luxuryGrey border border-white/5 min-h-[320px] flex flex-col justify-center transition-colors duration-300";
-        gridTitle.className = "text-xl font-bold text-white";
-        
-        productCards.forEach(card => {
-          card.className = "product-card bg-luxuryGrey border border-white/5 rounded-2xl p-5 flex flex-col justify-between transition-all duration-300 shadow-xl group";
+        panels.forEach(p => {
+          p.style.backgroundColor = '#161619';
+          p.style.borderColor = 'rgba(255,255,255,0.05)';
         });
-        cardTitles.forEach(title => title.className = "card-text-title text-md font-bold text-white tracking-tight");
 
-        toggleBtn.innerHTML = "☀️ <span>Light Mode</span>";
-        isCurrentThemeDark = true;
+        toggleBtnText.innerText = "Tactical Titanium";
+        isCurrentlyObsidianMode = true;
       }
     }
   </script>
