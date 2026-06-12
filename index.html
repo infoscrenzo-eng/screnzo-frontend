@@ -23,37 +23,31 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0D0D0E; color: #FFFFFF; }
-    /* Clean custom scrollbar for luxury UI */
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: #0D0D0E; }
     ::-webkit-scrollbar-thumb { background: #1A1A1C; border-radius: 10px; }
     ::-webkit-scrollbar-thumb:hover { background: #D4AF37; }
   </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between">
+<body class="min-h-screen flex flex-col justify-between overflow-x-hidden">
 
-  <!-- Header Section -->
   <header class="border-b border-white/5 bg-obsidian/95 sticky top-0 z-50 px-4 md:px-8 py-4">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
       <div class="text-2xl font-extrabold tracking-wider">SCREN<span class="text-premiumGold">ZO</span></div>
       
-      <!-- Live Smart Search Input (Intent-Oriented) -->
       <div class="relative w-full md:w-80">
-        <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-500 text-sm">🔍</span>
+        <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-500 text-xs">🔍</span>
         <input type="text" id="searchInput" placeholder="Search your model (e.g., S26 Ultra)..." 
           class="w-full bg-luxuryGrey border border-white/10 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-premiumGold transition-colors">
       </div>
     </div>
   </header>
 
-  <!-- Navigation Control Center -->
   <section class="w-full bg-luxuryGrey/40 border-b border-white/5 py-6 px-4">
     <div class="max-w-7xl mx-auto">
       <p class="text-xs font-bold text-premiumGold uppercase tracking-widest mb-3 text-center md:text-left">Find Precise Fit Architecture</p>
       
-      <!-- 3-Tier Sequential Search Matrix Bar -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-        <!-- Tier 1: Category Filter -->
         <div class="relative">
           <select id="categoryDrop" class="w-full bg-luxuryGrey border border-white/10 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-premiumGold appearance-none cursor-pointer">
             <option value="all">All Categories</option>
@@ -62,14 +56,12 @@
           </select>
         </div>
 
-        <!-- Tier 2: Brand Filter -->
         <div class="relative">
           <select id="brandDrop" class="w-full bg-luxuryGrey border border-white/10 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-premiumGold appearance-none cursor-pointer">
             <option value="">Select Brand...</option>
           </select>
         </div>
 
-        <!-- Tier 3: Model Filter -->
         <div class="relative">
           <select id="modelDrop" disabled class="w-full bg-luxuryGrey border border-white/10 rounded-xl px-4 py-3 text-xs text-gray-500 focus:outline-none focus:border-premiumGold appearance-none cursor-not-allowed">
             <option value="">Choose a model...</option>
@@ -79,10 +71,8 @@
     </div>
   </section>
 
-  <!-- Main Showcase Feed -->
   <main class="flex-grow max-w-7xl w-full mx-auto px-4 md:px-8 py-12">
     
-    <!-- Dynamic Header State Message -->
     <div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5 pb-4">
       <div>
         <h1 id="feedTitle" class="text-xl font-bold text-white tracking-wide">Premium Product Collection</h1>
@@ -93,12 +83,9 @@
       </div>
     </div>
 
-    <!-- Product Grid Canvas -->
     <div id="cardsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- Database card items render here dynamically -->
-    </div>
+      </div>
 
-    <!-- Empty Results State Overlay -->
     <div id="emptyState" class="hidden text-center py-20">
       <span class="text-4xl">🛡️</span>
       <h3 class="text-md font-bold text-white mt-4">No Matching Configurations Found</h3>
@@ -106,12 +93,52 @@
     </div>
   </main>
 
-  <!-- Luxury Footer -->
+  <div id="cartDrawer" class="fixed inset-y-0 right-0 w-full sm:w-[450px] bg-luxuryGrey border-l border-white/10 z-50 transform translate-x-full transition-transform duration-300 ease-in-out shadow-[0_0_50px_rgba(0,0,0,0.8)] flex flex-col justify-between hidden">
+    <div class="p-6 border-b border-white/5 flex justify-between items-center bg-obsidian">
+      <div class="flex items-center gap-2">
+        <span class="text-lg">🛒</span>
+        <h3 class="text-md font-extrabold tracking-wide text-white uppercase">Your Protection Bundle</h3>
+      </div>
+      <button onclick="toggleCartDrawer(false)" class="text-gray-400 hover:text-premiumGold transition-colors text-sm font-mono">CLOSE ✕</button>
+    </div>
+
+    <div id="cartItemsList" class="p-6 flex-grow overflow-y-auto space-y-4">
+      </div>
+
+    <div class="p-6 border-t border-white/5 bg-obsidian/50 space-y-4">
+      <div class="space-y-2 text-xs font-medium border-b border-white/5 pb-4">
+        <div class="flex justify-between text-gray-400">
+          <span>Subtotal</span>
+          <span id="cartSubtotal" class="text-white font-bold">₹0</span>
+        </div>
+        <div class="flex justify-between text-gray-400">
+          <span>Insured Express Shipping</span>
+          <span class="text-emeraldGreen font-bold uppercase tracking-wider text-[10px]">FREE</span>
+        </div>
+        <div class="flex justify-between text-gray-400">
+          <span>Estimated GST (Included)</span>
+          <span id="cartTax" class="text-white">₹0</span>
+        </div>
+      </div>
+
+      <div class="flex justify-between items-baseline py-2">
+        <span class="text-sm font-bold text-white uppercase tracking-wider">Total Amount</span>
+        <span id="cartTotal" class="text-2xl font-extrabold text-premiumGold">₹0</span>
+      </div>
+
+      <button onclick="triggerPaymentGateway()" class="w-full bg-premiumGold text-obsidian font-extrabold py-4 rounded-xl text-xs uppercase tracking-widest transition-all duration-300 hover:bg-goldHover hover:scale-[1.01] shadow-[0_4px_25px_rgba(212,175,55,0.25)]">
+        Proceed to Secure Checkout
+      </button>
+      <p class="text-[10px] text-gray-500 text-center tracking-wide uppercase">🔒 Encrypted 256-Bit SSL Checkout Connection</p>
+    </div>
+  </div>
+
+  <div id="cartBackdrop" onclick="toggleCartDrawer(false)" class="fixed inset-0 bg-black/60 z-40 transition-opacity duration-300 opacity-0 pointer-events-none"></div>
+
   <footer class="border-t border-white/5 bg-obsidian py-6 text-center text-xs text-gray-600 tracking-wider uppercase">
     &copy; 2026 SCRENZO Premium Shield. Uncompromising Structural Integrity.
   </footer>
 
-  <!-- Live Database Real-Time Engine -->
   <script>
     const SUPABASE_URL = "https://arpwqiiwrcumelqxvgdu.supabase.co";
     const SUPABASE_KEY = "sb_publishable_TSaS0yglUFyygvrnh7plow_qQuUkJRz";
@@ -127,8 +154,9 @@
     const emptyState = document.getElementById('emptyState');
 
     let localProductsCache = [];
+    let primaryShoppingCart = null;
 
-    // 1. Initialize Engine & Fetch Complete Catalog from Supabase
+    // 1. Initial Data Load Sequence
     async function initCatalog() {
       try {
         const response = await fetch(`${SUPABASE_URL}/rest/v1/products?select=*`, {
@@ -143,7 +171,6 @@
       }
     }
 
-    // Populate Brands Based on Data
     function populateBrandDropdown() {
       const uniqueBrands = [...new Set(localProductsCache.map(p => p.device_brand))].filter(Boolean);
       brandDrop.innerHTML = '<option value="">All Brands</option>';
@@ -152,7 +179,6 @@
       });
     }
 
-    // Populate Models Based on Chosen Brand
     function updateModelDropdown(selectedBrand) {
       if (!selectedBrand) {
         modelDrop.disabled = true;
@@ -174,14 +200,13 @@
       });
     }
 
-    // 2. High-Converting Multi-Tier Filtration Core Algorithm
+    // 2. Filter Application Flow Matrix
     function applyFilterMatrix() {
       const targetCategory = categoryDrop.value;
       const targetBrand = brandDrop.value;
       const targetModel = modelDrop.value;
       const searchString = searchInput.value.toLowerCase().trim();
 
-      // Dynamic Title Copy Assignment
       if (targetBrand && targetModel) {
         feedTitle.innerText = `${targetBrand} ${targetModel} Protection`;
         feedSubtitle.innerText = `Displaying custom-engineered shield architectural variants built specifically for your device.`;
@@ -193,7 +218,6 @@
         feedSubtitle.innerText = `Showing all luxury protection options available for instant fulfillment.`;
       }
 
-      // Filter Logic Execution
       const filteredList = localProductsCache.filter(item => {
         const matchesCategory = (targetCategory === 'all' || (item.category && item.category.toLowerCase() === targetCategory.toLowerCase()));
         const matchesBrand = (!targetBrand || item.device_brand === targetBrand);
@@ -211,7 +235,7 @@
       renderGridFeed(filteredList);
     }
 
-    // 3. Render HTML Product Cards with Advanced Pricing Psychology
+    // 3. Dynamic Card UI Generator
     function renderGridFeed(products) {
       cardsGrid.innerHTML = '';
       resultsBadge.innerText = `${products.length} Option${products.length === 1 ? '' : 's'} Discovered`;
@@ -222,16 +246,15 @@
       }
       emptyState.classList.add('hidden');
 
-      products.forEach(item => {
-        // Fallback pricing configuration logic if values are absent from mock columns
+      products.forEach((item, index) => {
         const salePrice = item.price || 999;
         const mrpPrice = item.mrp || Math.round(salePrice * 1.6);
         const cashSavings = mrpPrice - salePrice;
 
-        const productCard = `
+        // Use index position to bypass column parameter typos safely
+        const cardHtml = `
           <div class="bg-luxuryGrey border border-white/5 rounded-2xl p-5 flex flex-col justify-between transition-all duration-300 hover:border-premiumGold/30 group shadow-[0_20px_40px_-15px_rgba(0,0,0,0.7)]">
             <div>
-              <!-- Visual Accent Header Ribbon -->
               <div class="flex justify-between items-start gap-2 mb-4">
                 <span class="text-[10px] font-mono tracking-widest bg-premiumGold/10 text-premiumGold px-2.5 py-1 rounded-md border border-premiumGold/20 font-bold uppercase">
                   ${item.device_brand || 'Premium'} Shield
@@ -241,13 +264,11 @@
                 </span>
               </div>
 
-              <!-- Titles -->
               <h3 class="text-md font-bold text-white tracking-tight group-hover:text-premiumGold transition-colors">
                 ${item.title || (item.device_brand + ' ' + item.device_model + ' Tempered Glass')}
               </h3>
               <p class="text-xs text-gray-400 font-medium mt-1">Designed for ${item.device_model || 'Universal device models'}</p>
               
-              <!-- Features Points Checklist -->
               <ul class="mt-4 space-y-1.5 text-[11px] text-gray-500 border-t border-white/5 pt-3">
                 <li class="flex items-center gap-1.5">⚡ <span class="text-gray-400">9H Structural Shield Hardness</span></li>
                 <li class="flex items-center gap-1.5">💎 <span class="text-gray-400">Pure HD Optical Transmission</span></li>
@@ -255,15 +276,14 @@
               </ul>
             </div>
 
-            <!-- Pricing Engine & Buy Matrix -->
             <div class="mt-6 pt-3 border-t border-white/5">
               <div class="flex items-baseline gap-2 mb-3">
                 <span class="text-xl font-extrabold text-white">₹${salePrice}</span>
                 <span class="text-xs text-gray-500 line-through">MRP ₹${mrpPrice}</span>
               </div>
               
-              <button onclick="executeSecurePurchase('${item.id}', '${item.device_model}')" 
-                class="w-full bg-premiumGold text-obsidian font-bold py-3 rounded-xl text-xs uppercase tracking-widest font-bold transition-all duration-300 hover:bg-goldHover hover:scale-[1.01] active:scale-[0.99] shadow-[0_4px_20px_rgba(212,175,55,0.15)]">
+              <button onclick="executeSecurePurchase(${index})" 
+                class="w-full bg-premiumGold text-obsidian font-bold py-3 rounded-xl text-xs uppercase tracking-widest font-bold transition-all duration-300 hover:bg-goldHover hover:scale-[1.01] shadow-[0_4px_20px_rgba(212,175,55,0.15)]">
                 Secure Purchase
               </button>
               <div class="text-[10px] text-gray-600 text-center mt-2 tracking-wide">
@@ -272,12 +292,11 @@
             </div>
           </div>
         `;
-        cardsGrid.innerHTML += productCard;
+        cardsGrid.innerHTML += cardHtml;
       });
     }
 
-   let primaryShoppingCart = null;
-
+    // 4. Cart Side-Drawer Animation & Mechanics Engine
     function toggleCartDrawer(isOpen) {
       const drawer = document.getElementById('cartDrawer');
       const backdrop = document.getElementById('cartBackdrop');
@@ -297,20 +316,16 @@
       }
     }
 
-    function executeSecurePurchase(productId, modelName) {
-      // Pinpoint product match out of local storage tracking cache
-      const chosenProduct = localProductsCache.find(p => p.id == productId);
+    function executeSecurePurchase(itemIndex) {
+      const chosenProduct = localProductsCache[itemIndex];
       if (!chosenProduct) return;
 
       const basePrice = chosenProduct.price || 999;
       const calcMrp = chosenProduct.mrp || Math.round(basePrice * 1.6);
 
-      // Map targeted shopping cart payload item 
       primaryShoppingCart = {
-        id: chosenProduct.id,
         title: chosenProduct.title || `${chosenProduct.device_brand} ${chosenProduct.device_model} Screen Shield`,
         model: chosenProduct.device_model,
-        brand: chosenProduct.device_brand,
         price: basePrice,
         mrp: calcMrp
       };
@@ -355,8 +370,7 @@
     }
 
     function updateCartTotals(totalPrice) {
-      const taxFactorCalculation = Math.round(totalPrice * (18 / 118)); // Calculate 18% inclusive domestic product GST tax parameters
-      
+      const taxFactorCalculation = Math.round(totalPrice * (18 / 118)); 
       document.getElementById('cartSubtotal').innerText = `₹${totalPrice}`;
       document.getElementById('cartTax').innerText = `₹${taxFactorCalculation}`;
       document.getElementById('cartTotal').innerText = `₹${totalPrice}`;
@@ -369,9 +383,9 @@
 
     function triggerPaymentGateway() {
       if (!primaryShoppingCart) return;
-      alert(`Connecting to Payment Processing Hub...\nTarget Item: ${primaryShoppingCart.title}\nFinal Transaction Value: ₹${primaryShoppingCart.price}\n\nOur next phase integration step will build your active direct merchant processing endpoint links!`);
+      alert(`Connecting to Razorpay Secure API Hub...\nItem: ${primaryShoppingCart.title}\nValue: ₹${primaryShoppingCart.price}`);
     }
-    // 4. Input Wire Event Observers
+
     brandDrop.addEventListener('change', (e) => {
       updateModelDropdown(e.target.value);
       applyFilterMatrix();
@@ -380,57 +394,7 @@
     categoryDrop.addEventListener('change', applyFilterMatrix);
     searchInput.addEventListener('input', applyFilterMatrix);
 
-    // Bootstrap execution script
     initCatalog();
   </script>
 </body>
 </html>
-<!-- Sliding Luxury Cart Drawer Panel -->
-  <div id="cartDrawer" class="fixed inset-y-0 right-0 w-full sm:w-[450px] bg-luxuryGrey border-l border-white/10 z-50 transform translate-x-full transition-transform duration-300 ease-in-out shadow-[0_0_50px_rgba(0,0,0,0.8)] flex flex-col justify-between hidden">
-    <!-- Cart Header -->
-    <div class="p-6 border-b border-white/5 flex justify-between items-center bg-obsidian">
-      <div class="flex items-center gap-2">
-        <span class="text-lg">🛒</span>
-        <h3 class="text-md font-extrabold tracking-wide text-white uppercase">Your Protection Bundle</h3>
-      </div>
-      <button onclick="toggleCartDrawer(false)" class="text-gray-400 hover:text-premiumGold transition-colors text-sm font-mono tracking-widest uppercase">Close ✕</button>
-    </div>
-
-    <!-- Cart Items Feed Container -->
-    <div id="cartItemsList" class="p-6 flex-grow overflow-y-auto space-y-4">
-      <!-- Added dynamic item elements render here -->
-    </div>
-
-    <!-- Cart Summary Calculations Matrix -->
-    <div class="p-6 border-t border-white/5 bg-obsidian/50 space-y-4">
-      <div class="space-y-2 text-xs font-medium border-b border-white/5 pb-4">
-        <div class="flex justify-between text-gray-400">
-          <span>Subtotal</span>
-          <span id="cartSubtotal" class="text-white font-bold">₹0</span>
-        </div>
-        <div class="flex justify-between text-gray-400">
-          <span>Insured Express Shipping</span>
-          <span class="text-emeraldGreen font-bold uppercase tracking-wider">FREE</span>
-        </div>
-        <div class="flex justify-between text-gray-400">
-          <span>Estimated GST (Included)</span>
-          <span id="cartTax" class="text-white">₹0</span>
-        </div>
-      </div>
-
-      <!-- Total Price Block -->
-      <div class="flex justify-between items-baseline py-2">
-        <span class="text-sm font-bold text-white uppercase tracking-wider">Total Amount</span>
-        <span id="cartTotal" class="text-2xl font-extrabold text-premiumGold">₹0</span>
-      </div>
-
-      <!-- Secure Checkout CTA Button -->
-      <button onclick="triggerPaymentGateway()" class="w-full bg-premiumGold text-obsidian font-extrabold py-4 rounded-xl text-xs uppercase tracking-widest transition-all duration-300 hover:bg-goldHover hover:scale-[1.01] shadow-[0_4px_25px_rgba(212,175,55,0.25)]">
-        Proceed to Secure Gateway Checkout
-      </button>
-      <p class="text-[10px] text-gray-500 text-center tracking-wide uppercase">🔒 Encrypted 256-Bit SSL Checkout Connection</p>
-    </div>
-  </div>
-
-  <!-- Dimmed Background Overlay Backdrop -->
-  <div id="cartBackdrop" onclick="toggleCartDrawer(false)" class="fixed inset-0 bg-black/60 z-40 transition-opacity duration-300 opacity-0 pointer-events-none"></div>
