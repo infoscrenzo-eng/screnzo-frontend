@@ -219,8 +219,7 @@
       }
 
       const filteredList = localProductsCache.filter(item => {
-        const matchesCategory = (targetCategory === 'all' || (item.category && item.category.toLowerCase() === targetCategory.toLowerCase()));
-        const matchesBrand = (!targetBrand || item.device_brand === targetBrand);
+        const matchesCategory = true;        const matchesBrand = (!targetBrand || item.device_brand === targetBrand);
         const matchesModel = (!targetModel || item.device_model === targetModel);
         
         const matchesSearch = (!searchString || 
