@@ -276,11 +276,101 @@
       });
     }
 
-    // Action Execution Trigger Mock
-    function executeSecurePurchase(productId, modelName) {
-      alert(`Initializing Razorpay secure gateway checkout sequence for ${modelName} protection asset!`);
+   let primaryShoppingCart = null;
+
+    function toggleCartDrawer(isOpen) {
+      const drawer = document.getElementById('cartDrawer');
+      const backdrop = document.getElementById('cartBackdrop');
+      
+      if (isOpen) {
+        drawer.classList.remove('hidden');
+        setTimeout(() => {
+          drawer.classList.remove('translate-x-full');
+          backdrop.classList.remove('opacity-0', 'pointer-events-none');
+          backdrop.classList.add('opacity-100');
+        }, 10);
+      } else {
+        drawer.classList.add('translate-x-full');
+        backdrop.classList.remove('opacity-100');
+        backdrop.classList.add('opacity-0', 'pointer-events-none');
+        setTimeout(() => drawer.classList.add('hidden'), 300);
+      }
     }
 
+    function executeSecurePurchase(productId, modelName) {
+      // Pinpoint product match out of local storage tracking cache
+      const chosenProduct = localProductsCache.find(p => p.id == productId);
+      if (!chosenProduct) return;
+
+      const basePrice = chosenProduct.price || 999;
+      const calcMrp = chosenProduct.mrp || Math.round(basePrice * 1.6);
+
+      // Map targeted shopping cart payload item 
+      primaryShoppingCart = {
+        id: chosenProduct.id,
+        title: chosenProduct.title || `${chosenProduct.device_brand} ${chosenProduct.device_model} Screen Shield`,
+        model: chosenProduct.device_model,
+        brand: chosenProduct.device_brand,
+        price: basePrice,
+        mrp: calcMrp
+      };
+
+      renderCartDOM();
+      toggleCartDrawer(true);
+    }
+
+    function renderCartDOM() {
+      const itemsContainer = document.getElementById('cartItemsList');
+      if (!primaryShoppingCart) {
+        itemsContainer.innerHTML = `<p class="text-xs text-gray-500 text-center py-8">Your shopping cart asset bundle is empty.</p>`;
+        updateCartTotals(0);
+        return;
+      }
+
+      const grossSavings = primaryShoppingCart.mrp - primaryShoppingCart.price;
+
+      itemsContainer.innerHTML = `
+        <div class="bg-obsidian border border-white/5 rounded-xl p-4 space-y-3 relative">
+          <div class="flex justify-between items-start gap-3">
+            <div>
+              <h4 class="text-xs font-bold text-white tracking-wide">${primaryShoppingCart.title}</h4>
+              <p class="text-[11px] text-gray-400 mt-0.5">Device Variant: ${primaryShoppingCart.model}</p>
+            </div>
+            <button onclick="clearShoppingCartItem()" class="text-gray-600 hover:text-red-400 text-xs font-mono">✕ Remove</button>
+          </div>
+          
+          <div class="flex justify-between items-center pt-2 border-t border-white/5">
+            <span class="text-[10px] text-emeraldGreen bg-emeraldGreen/10 border border-emeraldGreen/20 px-2 py-0.5 rounded font-bold uppercase">
+              Promo Savings: -₹${grossSavings}
+            </span>
+            <div class="flex items-baseline gap-1.5">
+              <span class="text-sm font-extrabold text-white">₹${primaryShoppingCart.price}</span>
+              <span class="text-[11px] text-gray-500 line-through">MRP ₹${primaryShoppingCart.mrp}</span>
+            </div>
+          </div>
+        </div>
+      `;
+
+      updateCartTotals(primaryShoppingCart.price);
+    }
+
+    function updateCartTotals(totalPrice) {
+      const taxFactorCalculation = Math.round(totalPrice * (18 / 118)); // Calculate 18% inclusive domestic product GST tax parameters
+      
+      document.getElementById('cartSubtotal').innerText = `₹${totalPrice}`;
+      document.getElementById('cartTax').innerText = `₹${taxFactorCalculation}`;
+      document.getElementById('cartTotal').innerText = `₹${totalPrice}`;
+    }
+
+    function clearShoppingCartItem() {
+      primaryShoppingCart = null;
+      renderCartDOM();
+    }
+
+    function triggerPaymentGateway() {
+      if (!primaryShoppingCart) return;
+      alert(`Connecting to Payment Processing Hub...\nTarget Item: ${primaryShoppingCart.title}\nFinal Transaction Value: ₹${primaryShoppingCart.price}\n\nOur next phase integration step will build your active direct merchant processing endpoint links!`);
+    }
     // 4. Input Wire Event Observers
     brandDrop.addEventListener('change', (e) => {
       updateModelDropdown(e.target.value);
